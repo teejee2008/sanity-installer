@@ -1,0 +1,28 @@
+Format: 1.8
+Date: Fri, 30 Jun 2017 10:00:00 +0530
+Source: sanity
+Binary: sanity
+Architecture: source amd64
+Version: 17.7
+Distribution: xenial
+Urgency: medium
+Maintainer: Tony George <tony.george.kol@gmail.com>
+Changed-By: Tony George <tony.george.kol@gmail.com>
+Description:
+ sanity     - Creates installers for all Linux distributions
+Changes:
+ sanity (17.7) xenial; urgency=medium
+ .
+   * Initial release
+Checksums-Sha1:
+ 64824e18923e1b3361fda5eb488e613f2e12d019 598 sanity_17.7.dsc
+ f46b78d93f1a305b77f56a8f85d1220b7c76f2ea 52748 sanity_17.7.tar.xz
+ 49df390fd74cf46fc92f5a684fc9449a8b04bff0 49912 sanity_17.7_amd64.deb
+Checksums-Sha256:
+ 8c97c82179a77de8e86fbf181126b47d9821b07c7f2716eb7412c6458627d116 598 sanity_17.7.dsc
+ 0ec1f69b07605fea010f476533f9f5589bf605a2fed02578924f9c520c8f11be 52748 sanity_17.7.tar.xz
+ 6dfe36e30ab91a64ea321fe93155f5ea2f6892818465e9d9a36b21378c5ff08c 49912 sanity_17.7_amd64.deb
+Files:
+ 8f24af9f65e748719343355622611220 598 utils extra sanity_17.7.dsc
+ 8b70c54b518342f059cb2ccd6eff4daa 52748 utils extra sanity_17.7.tar.xz
+ 6cbcb4d7496c409ef3390e2c38ebfcec 49912 utils extra sanity_17.7_amd64.deb

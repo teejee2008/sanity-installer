@@ -1,0 +1,28 @@
+Format: 1.8
+Date: Fri, 30 Jun 2017 10:00:00 +0530
+Source: sanity
+Binary: sanity
+Architecture: source i386
+Version: 17.7
+Distribution: xenial
+Urgency: medium
+Maintainer: Tony George <tony.george.kol@gmail.com>
+Changed-By: Tony George <tony.george.kol@gmail.com>
+Description:
+ sanity     - Creates installers for all Linux distributions
+Changes:
+ sanity (17.7) xenial; urgency=medium
+ .
+   * Initial release
+Checksums-Sha1:
+ 4dda06addabc21cd523c1b94a03b863818710481 598 sanity_17.7.dsc
+ a59168820ed90c358f24085b5fa98c1fe4a136e3 52756 sanity_17.7.tar.xz
+ 8781634ba14b9af1ae6c54f05b2e5d828c230b97 47864 sanity_17.7_i386.deb
+Checksums-Sha256:
+ afd29d4738ebef10e8e4c604ece790078deef84a0bfb039e916278817d15af80 598 sanity_17.7.dsc
+ 342474628b79b307fadcffa836aaba62124ddc418a28ed70297c87012df51f06 52756 sanity_17.7.tar.xz
+ b3c45e266cd01ec2c7f34b7172196efbfeb3698bb0c874e3e294e328b25e2d67 47864 sanity_17.7_i386.deb
+Files:
+ 37cc44f77b6fa7f23a7ed114691d6757 598 utils extra sanity_17.7.dsc
+ b2aa9188f354937a3332446223b4b2f1 52756 utils extra sanity_17.7.tar.xz
+ 66812cd863b87d4dbe1f733fb44b0f6c 47864 utils extra sanity_17.7_i386.deb

@@ -1,0 +1,135 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Tony George (teejeetech@gmail.com)
+# This file is distributed under the same license as the sanity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: sanity 1.6\n"
+"Report-Msgid-Bugs-To: teejeetech@gmail.com\n"
+"POT-Creation-Date: 2017-06-16 21:01+0530\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: Utility/AppLock.vala:54
+msgid "Another instance of this application is running"
+msgstr ""
+
+#: Main.vala:87
+msgid "Application requires admin access"
+msgstr ""
+
+#: Main.vala:219
+msgid "Assume Yes for all prompts"
+msgstr ""
+
+#: Main.vala:109
+msgid "Commands listed below are not available on this system"
+msgstr ""
+
+#: Utility/TeeJee.FileSystem.vala:324
+msgid "Created directory"
+msgstr ""
+
+#: Utility/TeeJee.FileSystem.vala:347
+msgid "Deleted directory"
+msgstr ""
+
+#: Main.vala:143
+msgid "Device not found"
+msgstr ""
+
+#: Utility/TeeJee.FileSystem.vala:477
+msgid "Dir not found"
+msgstr ""
+
+#: Utility/TeeJee.Logging.vala:89
+msgid "E"
+msgstr ""
+
+#: Utility/TeeJee.FileSystem.vala:190
+msgid "Failed to copy file"
+msgstr ""
+
+#: Utility/TeeJee.FileSystem.vala:331
+msgid "Failed to create dir"
+msgstr ""
+
+#: Utility/TeeJee.FileSystem.vala:99
+msgid "Failed to delete file"
+msgstr ""
+
+#: Utility/TeeJee.FileSystem.vala:209
+msgid "Failed to move file"
+msgstr ""
+
+#: Utility/TeeJee.FileSystem.vala:147
+msgid "Failed to read file"
+msgstr ""
+
+#: Utility/TeeJee.FileSystem.vala:174
+msgid "Failed to write file"
+msgstr ""
+
+#: Utility/TeeJee.FileSystem.vala:630 Utility/TeeJee.FileSystem.vala:679
+msgid "File is missing"
+msgstr ""
+
+#: Main.vala:152 Utility/TeeJee.FileSystem.vala:204
+#: Utility/TeeJee.FileSystem.vala:506
+msgid "File not found"
+msgstr ""
+
+#: Main.vala:218
+msgid "Full path to ISO file to be written to device"
+msgstr ""
+
+#: Main.vala:215
+msgid "Options"
+msgstr ""
+
+#: Main.vala:110
+msgid "Please install required packages and try running again"
+msgstr ""
+
+#: Main.vala:88
+msgid "Run this as root or using sudo/pkexec"
+msgstr ""
+
+#: Main.vala:220
+msgid "Show all options"
+msgstr ""
+
+#: Utility/TeeJee.Process.vala:507
+msgid "Stopped"
+msgstr ""
+
+#: Main.vala:213
+msgid "Syntax"
+msgstr ""
+
+#: Main.vala:217
+msgid "Target device for writing (ex. /dev/sdb2)"
+msgstr ""
+
+#: Main.vala:201
+msgid "Unknown option"
+msgstr ""
+
+#: Main.vala:229
+msgid "Using temp directory"
+msgstr ""
+
+#: Utility/TeeJee.Logging.vala:89
+msgid "W"
+msgstr ""
+
+#: Utility/AppLock.vala:59
+msgid "[Warning] Deleted invalid lock"
+msgstr ""
