@@ -6,6 +6,9 @@ clean:
 
 install:
 	cd src; make install
+
+install-all:
+	cd src; make install-all
 	
 uninstall:
 	cd src; make uninstall

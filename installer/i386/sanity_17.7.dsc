@@ -10,8 +10,8 @@ Build-Depends: debhelper (>= 8.0.0), autotools-dev, valac, libgee-0.8-dev, libjs
 Package-List:
  sanity deb utils extra arch=any
 Checksums-Sha1:
- a59168820ed90c358f24085b5fa98c1fe4a136e3 52756 sanity_17.7.tar.xz
+ 75b1eb4c0eba2ae17c455aef3b3e8762520d6a87 456344 sanity_17.7.tar.xz
 Checksums-Sha256:
- 342474628b79b307fadcffa836aaba62124ddc418a28ed70297c87012df51f06 52756 sanity_17.7.tar.xz
+ 4787eca9436f18816e229f818d4058cdfac37be5fe2f4ee66bba7d698f485934 456344 sanity_17.7.tar.xz
 Files:
- b2aa9188f354937a3332446223b4b2f1 52756 sanity_17.7.tar.xz
+ 3c9578b0b2a104bb8cfa64d922659a86 456344 sanity_17.7.tar.xz

@@ -6,6 +6,8 @@ cd $DIR
 
 app_name=$(cat app_name)
 
+make all
+
 # build debs
 sh build-deb.sh
 

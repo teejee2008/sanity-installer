@@ -33,7 +33,7 @@ using TeeJee.Misc;
 public Main App;
 public const string AppName = "Sanity Installer";
 public const string AppShortName = "sanity";
-public const string AppVersion = "17.7";
+public const string AppVersion = "17.10";
 public const int CliVersion = 2;
 public const string AppAuthor = "Tony George";
 public const string AppAuthorEmail = "teejeetech@gmail.com";
@@ -867,10 +867,14 @@ public class Main : GLib.Object{
 
 		string sanity_i386 = path_combine("/usr/share/sanity/files", "sanity.i386");
 		string sanity_amd64 = path_combine("/usr/share/sanity/files", "sanity.amd64");
+		string lib_i386 = path_combine("/usr/share/sanity/files", "lib32");
+		string lib_amd64 = path_combine("/usr/share/sanity/files", "lib64");
 		string bootstrapper = path_combine("/usr/share/sanity/files", "install.sh");
 		
 		string sanity_i386_temp = path_combine(base_path, "sanity.i386");
 		string sanity_amd64_temp = path_combine(base_path, "sanity.amd64");
+		string lib_i386_temp = path_combine(base_path, "lib32");
+		string lib_amd64_temp = path_combine(base_path, "lib64");
 		string bootstrapper_temp = path_combine(base_path, "install.sh");
 		string arch_temp = path_combine(base_path, "arch");
 		
@@ -883,6 +887,12 @@ public class Main : GLib.Object{
 		file_copy(bootstrapper, bootstrapper_temp);
 		chmod(bootstrapper_temp, "a+x");
 
+		Posix.system("mkdir -p %s".printf(lib_i386_temp));
+		Posix.system("cp -vf %s/* %s/".printf(lib_i386, lib_i386_temp));
+		
+		Posix.system("mkdir -p %s".printf(lib_amd64_temp));
+		Posix.system("cp -vf %s/* %s/".printf(lib_amd64, lib_amd64_temp));
+		
 		file_write(arch_temp, pkg_arch);
 
 		string out_file = path_combine(out_path, "%s-%s.run".printf(app_name.down().replace(" ","-"), pkg_arch));

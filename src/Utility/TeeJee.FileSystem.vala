@@ -235,6 +235,7 @@ namespace TeeJee.FileSystem{
 			if (file_src.query_exists()) {
 				var file_dest = File.new_for_path (dest_file);
 				file_src.copy(file_dest,FileCopyFlags.OVERWRITE,null,null);
+				log_msg("copy: '%s' -> '%s'".printf(src_file, dest_file));
 				return true;
 			}
 		}

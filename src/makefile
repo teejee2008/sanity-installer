@@ -10,7 +10,7 @@ app_name=sanity
 
 arch=$(shell { (uname -m) } )
 
-ifeq ($(shell { test ${arch} == 'x86_64' ; echo $$? ; } ), 0)
+ifeq ($(shell { test ${arch} = 'x86_64' ; echo $$? ; } ), 0)
 extralibpath=$(shell { echo '-X -Wl,-rpath,lib64'; } )
 else
 extralibpath=$(shell { echo '-X -Wl,-rpath,lib32'; } )
@@ -50,9 +50,28 @@ install:
 	install -m 0755 ${app_name} "$(DESTDIR)$(bindir)"
 
 	#shared files
+	#cp -dpr --no-preserve=ownership -t "$(DESTDIR)$(sharedir)/${app_name}" ./share/${app_name}/*
+	#chmod --recursive 0755 $(DESTDIR)$(sharedir)/${app_name}/*
+
+install-all:
+
+	#dirs
+	mkdir -p "$(DESTDIR)$(bindir)"
+	mkdir -p "$(DESTDIR)$(sharedir)"
+	mkdir -p "$(DESTDIR)$(mandir)"
+	mkdir -p "$(DESTDIR)$(man1dir)"
+	mkdir -p "$(DESTDIR)$(sharedir)/${app_name}"
+	mkdir -p "$(DESTDIR)$(sharedir)/pixmaps"
+	mkdir -p "$(DESTDIR)/var/log/${app_name}"
+	#mkdir -p "$(DESTDIR)$(localedir)/de/LC_MESSAGES"
+	
+	#binary
+	install -m 0755 ${app_name} "$(DESTDIR)$(bindir)"
+
+	#shared files
 	cp -dpr --no-preserve=ownership -t "$(DESTDIR)$(sharedir)/${app_name}" ./share/${app_name}/*
 	chmod --recursive 0755 $(DESTDIR)$(sharedir)/${app_name}/*
-
+	
 uninstall:
 
 	#binary
