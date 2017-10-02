@@ -8,16 +8,18 @@ man1dir=$(mandir)/man1
 CFLAGS=--std=c99
 app_name=sanity
 
-arch=$(shell { (uname -m) } )
+arch=$(shell getconf LONG_BIT)
 
-ifeq ($(shell { test ${arch} = 'x86_64' ; echo $$? ; } ), 0)
-extralibpath=$(shell { echo '-X -Wl,-rpath,lib64'; } )
+ifeq ($(arch), 64)
+extralibpath = -X -Wl,-rpath,lib64
 else
-extralibpath=$(shell { echo '-X -Wl,-rpath,lib32'; } )
+extralibpath = -X -Wl,-rpath,lib32
 endif
 
 all:
 
+	$(info arch is $(arch))
+	
 	#binary
 	valac -X -D'GETTEXT_PACKAGE="${app_name}"' --Xcc="-lm" \
 		$(extralibpath) \

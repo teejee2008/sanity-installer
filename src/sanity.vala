@@ -298,8 +298,6 @@ public class Main : GLib.Object{
 
 			install_packages();
 
-			check_packages();
-
 			show_final_message();
 		}
 	}
@@ -616,6 +614,8 @@ public class Main : GLib.Object{
 	private void check_packages_dnf(){
 
 		log_debug("check_packages_dnf()");
+
+		installed = new Gee.HashMap<string,string>();
 		
 		string std_out, std_err;
 		exec_sync("dnf list installed", out std_out, out std_err);
@@ -627,6 +627,8 @@ public class Main : GLib.Object{
 			installed[name] = name;
 		}
 
+		available = new Gee.HashMap<string,string>();
+		
 		exec_sync("dnf list available", out std_out, out std_err);
 		foreach(string line in std_out.split("\n")){
 			string[] arr = line.split(" ");
@@ -638,8 +640,10 @@ public class Main : GLib.Object{
 	}
 
 	private void check_packages_yum(){
-
+	
 		log_debug("check_packages_yum()");
+
+		installed = new Gee.HashMap<string,string>();
 		
 		string std_out, std_err;
 		exec_sync("yum list installed", out std_out, out std_err);
@@ -651,6 +655,8 @@ public class Main : GLib.Object{
 			installed[name] = name;
 		}
 
+		available = new Gee.HashMap<string,string>();
+		
 		exec_sync("yum list available", out std_out, out std_err);
 		foreach(string line in std_out.split("\n")){
 			string[] arr = line.split(" ");
@@ -664,6 +670,8 @@ public class Main : GLib.Object{
 	private void check_packages_pacman(){
 
 		log_debug("check_packages_pacman()");
+
+		installed = new Gee.HashMap<string,string>();
 		
 		string std_out, std_err;
 		exec_sync("pacman -Qq", out std_out, out std_err);
@@ -673,6 +681,8 @@ public class Main : GLib.Object{
 			string name = arr[0].strip();
 			installed[name] = name;
 		}
+
+		available = new Gee.HashMap<string,string>();
 
 		exec_sync("pacman -Ssq", out std_out, out std_err);
 		foreach(string line in std_out.split("\n")){
@@ -686,6 +696,8 @@ public class Main : GLib.Object{
 	private void check_packages_apt(){
 
 		log_debug("check_packages_apt()");
+
+		installed = new Gee.HashMap<string,string>();
 		
 		string std_out, std_err;
 		exec_sync("dpkg --get-selections", out std_out, out std_err);
@@ -699,6 +711,8 @@ public class Main : GLib.Object{
 			//log_debug("installed: '%s'".printf(name));
 		}
 
+		available = new Gee.HashMap<string,string>();
+		
 		exec_sync("apt-cache pkgnames", out std_out, out std_err);
 		foreach(string line in std_out.split("\n")){
 			string[] arr = line.split("\t");
@@ -727,6 +741,9 @@ public class Main : GLib.Object{
 			deps_list = deps_arch;
 			break;
 		}
+
+		deps_install = new Gee.ArrayList<string>();
+		deps_missing = new Gee.ArrayList<string>();
 		
 		foreach(string name in deps_list){
 
@@ -781,6 +798,8 @@ public class Main : GLib.Object{
 			install_packages_apt();
 			break;
 		}
+
+		check_packages();
 	}
 
 	private void install_packages_dnf(){
