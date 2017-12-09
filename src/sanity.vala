@@ -79,8 +79,6 @@ public class Main : GLib.Object{
 	
 	public bool no_prompt = false;
 	
-	public AppLock app_lock;
-	
 	public static int main (string[] args) {
 
 		set_locale();
@@ -163,16 +161,6 @@ public class Main : GLib.Object{
 			msg += _("Please install required packages and try running again");
 			log_error(msg);
 			
-			exit(1);
-		}
-	}
-
-	public void lock_app(){
-
-		log_debug("lock_app()");
-		
-		app_lock = new AppLock(AppShortName);
-		if (!app_lock.create("running")){
 			exit(1);
 		}
 	}
@@ -535,7 +523,11 @@ public class Main : GLib.Object{
 		log_msg("Installing dependency packages...");
 		log_msg(string.nfill(78, '='));
 		
-		if (cmd_exists("apt-get")){
+		if (cmd_exists("apt")){
+			sys_type = "debian";
+			pkg_manager = "apt";
+		}
+		else if (cmd_exists("apt-get")){
 			sys_type = "debian";
 			pkg_manager = "apt-get";
 		}
@@ -585,7 +577,7 @@ public class Main : GLib.Object{
 	private void check_packages(){
 
 		//log_msg(string.nfill(78, '='));
-		//log_msg("Checking installed packages...");
+		log_msg("Checking installed packages...");
 		//log_msg(string.nfill(78, '='));
 
 		log_debug("check_packages()");
@@ -600,6 +592,7 @@ public class Main : GLib.Object{
 		case "pacman":
 			check_packages_pacman();
 			break;
+		case "apt":
 		case "apt-get":
 			check_packages_apt();
 			break;
@@ -826,7 +819,7 @@ public class Main : GLib.Object{
 
 		if (install_list.length == 0){ return; }
 		
-		Posix.system("pacman -S %s".printf(install_list));
+		Posix.system("pacman --needed -S %s".printf(install_list));
 	}
 
 	private void install_packages_apt(){
@@ -884,33 +877,31 @@ public class Main : GLib.Object{
 		
 		read_config();
 
-		string sanity_i386 = path_combine("/usr/share/sanity/files", "sanity.i386");
-		string sanity_amd64 = path_combine("/usr/share/sanity/files", "sanity.amd64");
-		string lib_i386 = path_combine("/usr/share/sanity/files", "lib32");
-		string lib_amd64 = path_combine("/usr/share/sanity/files", "lib64");
+		generate_for_arch("i386");
+		
+		generate_for_arch("amd64");
+	}
+
+	private void generate_for_arch(string out_arch){
+
+		string sanity_bin = path_combine("/usr/share/sanity/files", "sanity.%s".printf(out_arch));
+		string lib_dir = path_combine("/usr/share/sanity/files", "lib%s".printf((out_arch == "i386") ? "32" : "64"));
 		string bootstrapper = path_combine("/usr/share/sanity/files", "install.sh");
 		
-		string sanity_i386_temp = path_combine(base_path, "sanity.i386");
-		string sanity_amd64_temp = path_combine(base_path, "sanity.amd64");
-		string lib_i386_temp = path_combine(base_path, "lib32");
-		string lib_amd64_temp = path_combine(base_path, "lib64");
+		string sanity_bin_temp = path_combine(base_path, "sanity");
+		string lib_dir_temp = path_combine(base_path, "libs");
 		string bootstrapper_temp = path_combine(base_path, "install.sh");
+		
 		string arch_temp = path_combine(base_path, "arch");
 		
-		file_copy(sanity_i386, sanity_i386_temp);
-		chmod(sanity_i386_temp, "a+x");
-		
-		file_copy(sanity_amd64, sanity_amd64_temp);
-		chmod(sanity_amd64_temp, "a+x");
-		
+		file_copy(sanity_bin, sanity_bin_temp);
+		chmod(sanity_bin_temp, "a+x");
+	
 		file_copy(bootstrapper, bootstrapper_temp);
 		chmod(bootstrapper_temp, "a+x");
 
-		Posix.system("mkdir -p %s".printf(lib_i386_temp));
-		Posix.system("cp -vf %s/* %s/".printf(lib_i386, lib_i386_temp));
-		
-		Posix.system("mkdir -p %s".printf(lib_amd64_temp));
-		Posix.system("cp -vf %s/* %s/".printf(lib_amd64, lib_amd64_temp));
+		Posix.system("mkdir -p %s".printf(lib_dir_temp));
+		Posix.system("cp -avf %s/* %s/".printf(lib_dir, lib_dir_temp));
 		
 		file_write(arch_temp, pkg_arch);
 
@@ -923,8 +914,8 @@ public class Main : GLib.Object{
 		
 		Posix.system(cmd);
 
-		file_delete(sanity_i386_temp);
-		file_delete(sanity_amd64_temp);
+		file_delete(sanity_bin_temp);
+		dir_delete(lib_dir_temp);
 		file_delete(bootstrapper_temp);
 		file_delete(arch_temp);
 	}

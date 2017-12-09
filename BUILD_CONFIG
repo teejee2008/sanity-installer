@@ -1,0 +1,6 @@
+
+app_fullname="Sanity"
+app_name="sanity"
+pkg_name="sanity"
+pkg_version=$(dpkg-parsechangelog --show-field Version)
+git_origin=""

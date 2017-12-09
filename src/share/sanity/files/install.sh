@@ -64,12 +64,7 @@ RUN_AS_ADMIN
 BACKUP_IFS
 SET_IFS_NEWLINE
 
-if [ $(uname -m) == 'x86_64' ]; then
-	chmod a+x ./sanity.amd64
-	./sanity.amd64
-else
-	chmod a+x ./sanity.i386
-	./sanity.i386
-fi
+chmod a+x ./sanity
+./sanity
 
 EXIT 0

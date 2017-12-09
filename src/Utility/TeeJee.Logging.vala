@@ -71,8 +71,7 @@ namespace TeeJee.Logging{
 		}
 	}
 
-	public void log_error (string message, bool highlight = false,
-		bool is_warning = false){
+	public void log_error (string message, bool highlight = false, bool is_warning = false){
 			
 		if (!LOG_ENABLE) { return; }
 
@@ -130,28 +129,5 @@ namespace TeeJee.Logging{
 		catch (Error e) {
 			stdout.printf (e.message);
 		}
-	}
-
-	public void log_to_file (string message, bool highlight = false){
-		try {
-			if (dos_log != null){
-				dos_log.put_string ("[%s] %s\n".printf(timestamp(), message));
-			}
-		}
-		catch (Error e) {
-			stdout.printf (e.message);
-		}
-	}
-
-	public void log_draw_line(){
-		log_msg(string.nfill(70,'='));
-	}
-
-	public void err_log_clear(){
-		err_log = "";
-	}
-
-	public void err_log_disable(){
-		err_log = null;
 	}
 }

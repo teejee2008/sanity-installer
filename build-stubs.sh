@@ -4,9 +4,7 @@ backup=`pwd`
 DIR="$( cd "$( dirname "$0" )" && pwd )"
 cd $DIR
 
-app_name=$(cat app_name)
-
-make all
+. ./BUILD_CONFIG
 
 # build debs
 sh build-deb.sh
@@ -24,23 +22,17 @@ echo "==========================================================================
 echo ""
 
 # extract deb
-dpkg-deb -xv ./installer/${arch}/${app_name}*.deb ./installer/${arch}/extracted
+dpkg-deb -xv release/${arch}/${app_name}*.deb release/${arch}/extracted
 
-#check for errors
-if [ $? -ne 0 ]; then
-	cd "$backup"; echo "Failed"; exit 1;
-fi
+if [ $? -ne 0 ]; then cd "$backup"; echo "Failed"; exit 1; fi
 
 echo "-------------------------------------------------------------------------"
 
 # copy stubs
-cp -pv --no-preserve=ownership ./installer/${arch}/extracted/usr/bin/sanity ./src/share/${app_name}/files/${app_name}.${arch}
+cp -pv --no-preserve=ownership release/${arch}/extracted/usr/bin/sanity ./src/share/${app_name}/files/${app_name}.${arch}
 chmod a-x ./src/share/${app_name}/files/${app_name}.${arch}
 
-#check for errors
-if [ $? -ne 0 ]; then
-	cd "$backup"; echo "Failed"; exit 1;
-fi
+if [ $? -ne 0 ]; then cd "$backup"; echo "Failed"; exit 1; fi
 
 echo "-------------------------------------------------------------------------"
 

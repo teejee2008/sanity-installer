@@ -1,51 +1,48 @@
 #!/bin/bash
 
-app_name=$(cat app_name)
-
-tgz="../../pbuilder/"
-dsc="../../builds/${app_name}*.dsc"
-libs="../../libs"
-
 backup=`pwd`
 DIR="$( cd "$( dirname "$0" )" && pwd )"
 cd $DIR
 
+. ./BUILD_CONFIG
+
 sh build-source.sh
 
-cd installer
+rm -fv release/${pkg_name}-*.deb 
 
-for arch in i386 amd64
-do
+build_deb_for_dist() {
+
+dist=$1
+arch=$2
 
 echo ""
 echo "=========================================================================="
-echo " build-deb.sh: $arch"
+echo " build-deb.sh : $dist-$arch"
 echo "=========================================================================="
 echo ""
 
-rm -rfv ${arch}
-mkdir -pv ${arch}
+rm -rfv release/${arch}
+mkdir -pv release/${arch}
 
 echo "-------------------------------------------------------------------------"
 
-sudo pbuilder --build --buildresult ${arch} --basetgz "${tgz}base-${arch}.tgz" ${dsc}
+pbuilder-dist $dist $arch build release/source/${pkg_name}*.dsc --buildresult release/$arch 
 
-#check for errors
-if [ $? -ne 0 ]; then
-	cd "$backup"; echo "Failed"; exit 1;
-fi
+if [ $? -ne 0 ]; then cd "$backup"; echo "Failed"; exit 1; fi
 
-echo "-------------------------------------------------------------------------"
+echo "--------------------------------------------------------------------------"
 
-cp -pv --no-preserve=ownership ./${arch}/${app_name}*.deb ./${app_name}-${arch}.deb
+cp -pv --no-preserve=ownership release/${arch}/${pkg_name}*.deb release/${pkg_name}-v${pkg_version}-${arch}.deb 
 
-#check for errors
-if [ $? -ne 0 ]; then
-	cd "$backup"; echo "Failed"; exit 1;
-fi
+if [ $? -ne 0 ]; then cd "$backup"; echo "Failed"; exit 1; fi
 
-echo "-------------------------------------------------------------------------"
+echo "--------------------------------------------------------------------------"
 
-done
+}
+
+build_deb_for_dist xenial i386
+build_deb_for_dist xenial amd64
+#build_deb_for_dist stretch armel
+#build_deb_for_dist stretch armhf
 
 cd "$backup"

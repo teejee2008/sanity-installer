@@ -1,3 +1,6 @@
+SHELL=/bin/bash
+CFLAGS=--std=c99
+
 prefix=/usr
 bindir=$(prefix)/bin
 sharedir=$(prefix)/share
@@ -5,37 +8,35 @@ localedir=$(sharedir)/locale
 launcherdir=$(sharedir)/applications
 mandir=$(sharedir)/man
 man1dir=$(mandir)/man1
-CFLAGS=--std=c99
+
 app_name=sanity
 
-arch=$(shell getconf LONG_BIT)
-
-ifeq ($(arch), 64)
-extralibpath = -X -Wl,-rpath,lib64
-else
-extralibpath = -X -Wl,-rpath,lib32
-endif
+extralibpath = -X -Wl,-rpath,libs
 
 all:
 
 	$(info arch is $(arch))
 	
 	#binary
-	valac -X -D'GETTEXT_PACKAGE="${app_name}"' --Xcc="-lm" \
+	valac  -X -D'GETTEXT_PACKAGE="${app_name}"' --Xcc="-lm" \
 		$(extralibpath) \
-		--thread ${app_name}.vala \
+		--thread \
+		${app_name}.vala \
 		Utility/TeeJee.FileSystem.vala \
 		Utility/TeeJee.Logging.vala \
 		Utility/TeeJee.Misc.vala \
 		Utility/TeeJee.Process.vala \
 		Utility/TeeJee.System.vala \
-		Utility/AppLock.vala \
 		-o ${app_name} --pkg glib-2.0 --pkg gio-unix-2.0 --pkg posix --pkg gee-0.8
+		#-X -static \
 
 clean:
-	#binary
-	rm -rf *.o ${app_name}
-
+	rm -rfv ../release/{source,i386,amd64,armel,armhf}
+	rm -rfv ../release/*.{run,deb}
+	rm -rfv *.c *.o *.mo
+	rm -fv ${app_name}
+	rm -fv share/${app_name}/files/${app_name}.{i386,amd64}
+	
 install:
 
 	#dirs
