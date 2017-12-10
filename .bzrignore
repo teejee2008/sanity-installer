@@ -1,5 +1,4 @@
 src/sanity
-src/sanity-gtk
 src/share/sanity/files/sanity\.i386
 src/share/sanity/files/sanity\.amd64
 release/source

@@ -121,6 +121,7 @@ public class Main : GLib.Object{
 		try{
 			program_path = GLib.FileUtils.read_link("/proc/self/exe");
 			program_path = file_parent(program_path);
+			base_path = program_path;
 		}
 		catch(Error e){
 			log_error(e.message);
@@ -275,6 +276,8 @@ public class Main : GLib.Object{
 		read_config();
 
 		list_files();
+
+		run_pre_install_script();
 		
 		install_files();
 
@@ -285,6 +288,8 @@ public class Main : GLib.Object{
 			check_packages();
 
 			install_packages();
+
+			run_post_install_script();
 
 			show_final_message();
 		}
@@ -498,6 +503,7 @@ public class Main : GLib.Object{
 
 	private void install_files(){
 
+		log_msg("");
 		log_msg(string.nfill(78, '='));
 		log_msg("Installing files...");
 		log_msg(string.nfill(78, '='));
@@ -514,6 +520,42 @@ public class Main : GLib.Object{
 			string target_path = "/" + file[files_dir.length + 1: file.length];
 			Posix.system("install -m 0755 '%s' '%s'".printf(file, target_path));
 			log_msg("%s".printf(target_path));
+		}
+	}
+
+	private void run_pre_install_script(){
+
+		string sh_file = path_combine(program_path, "preinst.sh");
+		
+		if (file_exists(sh_file)){
+
+			log_msg("");
+			log_msg(string.nfill(78, '='));
+			log_msg("Running Pre-Install Script...");
+			log_msg(string.nfill(78, '='));
+		
+			chmod(sh_file, "a+x");
+
+			string cmd = "'%s'".printf(escape_single_quote(sh_file));
+			Posix.system(cmd);
+		}
+	}
+
+	private void run_post_install_script(){
+
+		string sh_file = path_combine(program_path, "postinst.sh");
+		
+		if (file_exists(sh_file)){
+
+			log_msg("");
+			log_msg(string.nfill(78, '='));
+			log_msg("Running Post-Install Script...");
+			log_msg(string.nfill(78, '='));
+		
+			chmod(sh_file, "a+x");
+			
+			string cmd = "'%s'".printf(escape_single_quote(sh_file));
+			Posix.system(cmd);
 		}
 	}
 
@@ -833,6 +875,7 @@ public class Main : GLib.Object{
 
 	private void show_final_message(){
 
+		log_msg("");
 		log_msg(string.nfill(78, '='));
 		log_msg("Installation completed");
 		log_msg(string.nfill(78, '='));
