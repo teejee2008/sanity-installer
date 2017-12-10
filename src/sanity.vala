@@ -52,6 +52,7 @@ public class Main : GLib.Object{
 	public string base_path = "";
 	public string out_path = "";
 	public string command = "";
+	public bool use_xz = false;
 	
 	public string app_name = "";
 	public string pkg_arch = "";
@@ -222,6 +223,10 @@ public class Main : GLib.Object{
 					log_error("Expected: amd64, i386");
 					exit(1);
 				}
+				break;
+
+			case "--xz":
+				use_xz = true;
 				break;
 				
 			case "--help":
@@ -920,9 +925,7 @@ public class Main : GLib.Object{
 		
 		read_config();
 
-		generate_for_arch("i386");
-		
-		generate_for_arch("amd64");
+		generate_for_arch(pkg_arch);
 	}
 
 	private void generate_for_arch(string out_arch){
@@ -950,8 +953,18 @@ public class Main : GLib.Object{
 
 		string out_file = path_combine(out_path, "%s-%s.run".printf(app_name.down().replace(" ","-"), pkg_arch));
 
-		string cmd = "makeself '%s' '%s' \"%s (%s)\" ./install.sh ".printf(
-			escape_single_quote(base_path), escape_single_quote(out_file), app_name, pkg_arch);
+		string args = "";
+
+		if (use_xz){
+			args = " --xz";
+		}
+		
+		string cmd = "makeself %s '%s' '%s' \"%s (%s)\" ./install.sh ".printf(
+			args,
+			escape_single_quote(base_path),
+			escape_single_quote(out_file),
+			app_name,
+			pkg_arch);
 
 		log_debug(cmd);
 		
