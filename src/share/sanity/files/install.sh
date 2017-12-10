@@ -64,7 +64,17 @@ RUN_AS_ADMIN
 BACKUP_IFS
 SET_IFS_NEWLINE
 
+if [ -e preinst.sh ]; then
+	chmod a+x ./preinst.sh
+	./preinst.sh
+fi
+
 chmod a+x ./sanity
 ./sanity
+
+if [ -e postinst.sh ]; then
+	chmod a+x ./postinst.sh
+	./postinst.sh
+fi
 
 EXIT 0

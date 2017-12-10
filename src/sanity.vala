@@ -887,7 +887,7 @@ public class Main : GLib.Object{
 		string sanity_bin = path_combine("/usr/share/sanity/files", "sanity.%s".printf(out_arch));
 		string lib_dir = path_combine("/usr/share/sanity/files", "lib%s".printf((out_arch == "i386") ? "32" : "64"));
 		string bootstrapper = path_combine("/usr/share/sanity/files", "install.sh");
-		
+
 		string sanity_bin_temp = path_combine(base_path, "sanity");
 		string lib_dir_temp = path_combine(base_path, "libs");
 		string bootstrapper_temp = path_combine(base_path, "install.sh");
